@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <title>ACM World Cup</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}" type="image/x-icon">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <style>
+
+            @media only screen and (max-width: 768px) {
+                nav img {
+                height: 40px;
+            }
+            }
+
+        </style>
+    {% endblock %}
+</head>
+
+<body class="white">
+    {% block body %}
+    <nav class="navbar-fixed nav-extended white">
+        <div class="container">
+            <div class="nav-wrapper black-text white" style="padding-right: 5%;padding-left: 1%">
+                <div class="brand-logo">
+                    <a href="/">
+                        <img src="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}" class="responsive-img" style="height: 65px; padding: 5px;">
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-demo" class="black-text button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        <a href="/#about" class="black-text">About</a>
+                    </li>
+                    <li>
+                        <a href="/#prizes" class="black-text">Prizes</a>
+                    </li>
+                    <li>
+                        <a href="/#data" class="black-text">Get The Data</a>
+                    </li>
+                    <li>
+                        <a href="/register" class="black-text">Login/Register</a>
+                    </li>
+                </ul>
+                <ul class="side-nav white" id="mobile-demo">
+                    <li>
+                        <a href="/#about">About</a>
+                    </li>
+                    <li>
+                        <a href="/#prizes">Prizes</a>
+                    </li>
+                    <li>
+                        <a href="/#data">Get The Data</a>
+                    </li>
+                    <li>
+                        <a href="/register">Login/Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+        $('.parallax').parallax();
+        $(".button-collapse").sideNav();
+        });
+
+        $(document).ready(function(){
+        $('.modal').modal();
+
+        });
+
+
+    </script>
+
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,100 @@
+{% extends "skeleton.html" %}
+{% block body %}
+    {{ super() }}
+
+    <div class="parallax-container">
+      <div class="parallax">
+           <img height="200%"
+                style="display: block; transform: translate3d(-50%, 201px, 0px);"
+                src="{{ url_for('static', filename='assets/ai_4.jpg') }}">
+      </div>
+    </div>
+
+    {#  About Section  #}
+    <div class="section white black-text" id="about">
+        <div class="row container">
+          <h2 class="header">Predict The World Cup</h2>
+        </div>
+
+        <div class="row container">
+            <div class="container-item col s12 m12 l12">
+                <div class="card-content">
+                    <span class="card-title flow-text"><b>About</b></span>
+                    <p class="flow-text">Is artificial intelligence smarter (AI) than an Octopus? At the 2010 FIFA World Cup, Paul the Octopus predicted 12 out of 14 match results correctly but can AI do better in 2018? Researchers at the Insight National Centre for Data Analytics and the UCC student’s chapter of the Association for Computing Machinery (ACM) are a 3 week competition period where we encourage participants to build their own predictor using whatever dataset and method they want. At the end of challenge period, participants will submit their predictor code and predictions for every match including knockout stages on or before Jun 14th 2018. A scoring system has been designed to evaluate the effectiveness of the predictors and the winners will announced after the world cup finals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container">
+      <div class="parallax">
+           <img height="200%"
+                style="display: block; transform: translate3d(-50%, 201px, 0px);"
+                src=https://media3.giphy.com/media/uH7JvseKVMojS/giphy.gif>
+      </div>
+    </div>
+
+    {#  rules Section  #}
+    <div class="section white black-text">
+        <div class="row container">
+          <h2 class="header">Rules</h2>
+        </div>
+
+        <div class="row container">
+            <div class="container-item col s12 m12 l12">
+                <div class="card-content">
+                    <span class="card-title flow-text"><b>About</b></span>
+                    <p class="flow-text">Is artificial intelligence smarter (AI) than an Octopus? At the 2010 FIFA World Cup, Paul the Octopus predicted 12 out of 14 match results correctly but can AI do better in 2018? Researchers at the Insight National Centre for Data Analytics and the UCC student’s chapter of the Association for Computing Machinery (ACM) are a 3 week competition period where we encourage participants to build their own predictor using whatever dataset and method they want. At the end of challenge period, participants will submit their predictor code and predictions for every match including knockout stages on or before Jun 14th 2018. A scoring system has been designed to evaluate the effectiveness of the predictors and the winners will announced after the world cup finals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container">
+      <div class="parallax">
+           <img height="110%"
+                style="display: block; transform: translate3d(-50%, 201px, 0px);"
+                src=http://digitalspyuk.cdnds.net/16/27/480x240/landscape-1467900630-germany-pens.gif>
+      </div>
+    </div>
+
+    {#  Data Section  #}
+    <div class="section white black-text">
+        <div class="row container">
+          <h2 class="header">Get The Data</h2>
+        </div>
+
+        <div class="row container">
+            <div class="container-item col s12 m12 l12">
+                <div class="card-content">
+                    <span class="card-title flow-text"><b>About</b></span>
+                    <p class="flow-text">Is artificial intelligence smarter (AI) than an Octopus? At the 2010 FIFA World Cup, Paul the Octopus predicted 12 out of 14 match results correctly but can AI do better in 2018? Researchers at the Insight National Centre for Data Analytics and the UCC student’s chapter of the Association for Computing Machinery (ACM) are a 3 week competition period where we encourage participants to build their own predictor using whatever dataset and method they want. At the end of challenge period, participants will submit their predictor code and predictions for every match including knockout stages on or before Jun 14th 2018. A scoring system has been designed to evaluate the effectiveness of the predictors and the winners will announced after the world cup finals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        function passwordMatch (){
+            $('#register-password, #register-confirmation-password').on('keyup', function () {
+                if ($('#register-password').val() === $('#register-confirmation-password').val()) {
+                    $('#passwords-badge').text("Passwords match");
+                    $('#passwords-badge').attr("class", "new badge green");
+                    $('#passwords-badge').show();
+                    $('#register-submit').prop("disabled", false);
+                } else if ($('#register-password').val() !== $('#register-confirmation-password').val()) {
+                    $('#passwords-badge').text("Passwords do not match");
+                    $('#passwords-badge').attr("class", "new badge red");
+                    $('#passwords-badge').show();
+                    $('#register-submit').prop("disabled", true)
+                }
+            });
+        }
+
+        $(document).ready(passwordMatch())
+
+
+    </script>
+{% endblock %}

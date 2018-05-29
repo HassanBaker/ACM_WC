@@ -1,0 +1,47 @@
+{% extends "skeleton.html" %}
+{% block body %}
+    {{ super() }}
+    <br>
+
+    <div class="section white black-text">
+        <div class="row container">
+            <h4 class="header">Hello {{ FIRST_NAME }}</h4>
+
+            {% if SUBMITTED == None %}
+                <p class="flow-text">
+                    You have not submitted a file yet.
+                </p>
+
+                <p class="flow-text">
+                    Make sure you follow the <a href="">guidelines</a>
+                </p>
+
+                <form action="/upload-file" method="POST">
+                    <div class="file-field input-field">
+                        <div class="btn #42a5f5 blue lighten-1">
+                            <span>File</span>
+                            <input type="file">
+                        </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                    </div>
+                </form>
+                {% for message in get_flashed_messages() %}
+                    <div style="padding: 0 1em;" class="error-message red-text row s6">
+					    <i> {{ message }} </i>
+				    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+	</div>
+
+    <div class="row container center-align white black-text">
+        <form action="/logout" method="POST">
+            <button class="btn waves-effect waves-light black" type="submit" name="action">Logout
+                <i class="material-icons right"></i>
+            </button>
+        </form>
+    </div>
+{% endblock %}

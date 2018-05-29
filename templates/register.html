@@ -1,0 +1,115 @@
+{% extends "skeleton.html" %}
+{% block body %}
+    {{ super() }}
+    <br>
+    {#  Login + Registration Card  #}
+    <main class="container">
+
+        {# Login + Registration Tabs #}
+        <div class="row">
+
+            {# Login Form #}
+            <div id="login" class="col s12 m12 l6">
+                <form method="POST" action="/login" class="col row s12">
+					<br>
+                    <h3>Login</h3>
+
+					<div class="row">
+
+						<div class="input-field">
+							<label for="login-email">Email</label>
+							<input name="email" type="text" id="login-email" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="login-password">Password</label>
+							<input autocomplete="off" name="password" type="password" id="login-password" required>
+                        </div>
+
+					</div>
+
+					<button class="btn waves-effect waves-light black" type="submit">
+						Login
+						<i class="mdi-content-send right"></i>
+					</button>
+
+				</form>
+
+                {% for message in get_flashed_messages() %}
+
+                <div style="padding: 0 1em;" class="error-message red-text row s6">
+					<i> {{ message }} </i>
+				</div>
+
+                {% endfor %}
+                {% if FORGOT_PASS %}
+                    <a href="/forgotten-password">Click here if you forgot your password</a>
+                {% endif %}
+            </div>
+
+            {# RegisterForm #}
+            <div id="register" class="col s12 m12 l6">
+                <form method="POST" action="/register-form" class="col row s12">
+					<br>
+                    <h3>Register</h3>
+					<div class="row">
+                        <div class="row">
+                            <div class="input-field col s6 m6 l6">
+                                <input id="register-first-name" name="first_name" type="text" class="validate" required>
+                                <label for="first_name">First Name</label>
+                            </div>
+                            <div class="input-field col s6 m6 l6">
+                                <input id="register-surname" name="surname" type="text" class="validate" required>
+                                <label for="surname">Surname</label>
+                            </div>
+                        </div>
+
+						<div class="input-field">
+							<label for="email">Email</label>
+							<input name="email" type="text" id="register-email" class="validate" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="password">Password</label>
+							<input autocomplete="off" name="password" type="password" id="register-password" class="validate" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="confirmation-password">Confirm Password</label>
+							<input autocomplete="off" name="confirmation_password" type="password" id="register-confirmation-password" class="validate" required>
+                            <span class="new badge red" id="passwords-badge" data-badge-caption="" hidden>Passwords do not match</span>
+						</div>
+					</div>
+					<button class="btn waves-effect waves-light black" type="submit" id="register-submit" disabled>
+						Submit
+						<i class="mdi-content-send right"></i>
+					</button>
+				</form>
+                <div style="padding: 0 1em;" class="error-message red-text row s6">
+					<i> {{ REGISTRATION_MESSAGE }} </i>
+				</div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+
+        function passwordMatch (){
+            $('#register-password, #register-confirmation-password').on('keyup', function () {
+                if ($('#register-password').val() === $('#register-confirmation-password').val()) {
+                    $('#passwords-badge').text("Passwords match");
+                    $('#passwords-badge').attr("class", "new badge green");
+                    $('#passwords-badge').show();
+                    $('#register-submit').prop("disabled", false);
+                } else if ($('#register-password').val() !== $('#register-confirmation-password').val()) {
+                    $('#passwords-badge').text("Passwords do not match");
+                    $('#passwords-badge').attr("class", "new badge red");
+                    $('#passwords-badge').show();
+                    $('#register-submit').prop("disabled", true)
+                }
+            });
+        }
+
+        $(document).ready(passwordMatch())
+
+
+    </script>
+{% endblock %}

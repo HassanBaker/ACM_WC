@@ -1,0 +1,8 @@
+sendgrid
+flask
+bcrypt
+passlib
+werkzeug
+pandas
+wtforms
+pymysql

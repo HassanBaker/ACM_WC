@@ -3,19 +3,20 @@
 <head>
     {% block head %}
     <meta charset="UTF-8">
-    <title>ACM World Cup</title>
+    <title>Predict The World Cup</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}" type="image/x-icon">
-
+    <meta property="og:image" content="{{ url_for('static', filename='assets/ai_4.jpg') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <style>
 
-            @media only screen and (max-width: 768px) {
+            @media only screen and (max-width: 1047px) {
                 nav img {
                 height: 40px;
             }
+
             }
 
         </style>
@@ -29,11 +30,15 @@
             <div class="nav-wrapper black-text white" style="padding-right: 5%;padding-left: 1%">
                 <div class="brand-logo">
                     <a href="/">
-                        <img src="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}" class="responsive-img" style="height: 65px; padding: 5px;">
+                        <img src="{{ url_for('static', filename='assets/insight_logo_transparent.png') }}" class="responsive-img center-align" hspace= "10"
+                             style="height: 65px; padding-bottom: 9px; padding-top: 9px">
+
+                        <img src="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}" class="responsive-img" hspace= "10"
+                             style="height: 65px; padding: 5px;">
                     </a>
                 </div>
                 <a href="#" data-activates="mobile-demo" class="black-text button-collapse"><i class="material-icons">menu</i></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <ul id="nav-mobile" class="right hide-on-med-and-down sidenav">
                     <li>
                         <a href="/#about" class="black-text">About</a>
                     </li>
@@ -41,13 +46,16 @@
                         <a href="/#prizes" class="black-text">Prizes</a>
                     </li>
                     <li>
-                        <a href="/#data" class="black-text">Get The Data</a>
+                        <a href="/#competition" class="black-text">competition</a>
                     </li>
                     <li>
                         <a href="/register" class="black-text">Login/Register</a>
                     </li>
                 </ul>
-                <ul class="side-nav white" id="mobile-demo">
+            </div>
+        </div>
+    </nav>
+        <ul class="side-nav white" id="mobile-demo">
                     <li>
                         <a href="/#about">About</a>
                     </li>
@@ -55,15 +63,12 @@
                         <a href="/#prizes">Prizes</a>
                     </li>
                     <li>
-                        <a href="/#data">Get The Data</a>
+                        <a href="/#competition">competition</a>
                     </li>
                     <li>
                         <a href="/register">Login/Register</a>
                     </li>
                 </ul>
-            </div>
-        </div>
-    </nav>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -77,6 +82,8 @@
 
         $(document).ready(function(){
         $('.modal').modal();
+        $('.collapsible').collapsible();
+        $('.dropdown-trigger').dropdown();
 
         });
 
@@ -85,4 +92,5 @@
 
     {% endblock %}
 </body>
+
 </html>

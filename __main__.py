@@ -1,8 +1,9 @@
 from config import flask_config
 from db import create_table, drop_table
 from routes import app
+from tools import create_submissions_directory
 
 if __name__ == "__main__":
-    # drop_table()
+    create_submissions_directory()
     create_table()
     app.run(**flask_config)

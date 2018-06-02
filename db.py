@@ -9,7 +9,7 @@ queries = {
                       first_name VARCHAR(25) not null,
                       surname VARCHAR(25) not null,
                       email VARCHAR(40) not null,
-                      password VARCHAR(256) not NULL,
+                      password TEXT(256) not NULL,
                       confirmed BOOLEAN NOT NULL,
                       confirmation_token VARCHAR(20),
                       password_forgot_token VARCHAR(20),
@@ -29,7 +29,22 @@ queries = {
                         SET confirmation_token=NULL, confirmed=TRUE 
                         WHERE id=%s""",
     "get_user": """SELECT * FROM ACM_WC WHERE email=%s""",
-    "delete_user": """DELETE FROM ACM_WC WHERE id=%s"""
+    "delete_user": """DELETE FROM ACM_WC WHERE email=%s""",
+    "change_password": """UPDATE ACM_WC
+                          SET password_forgot_token=NULL, password=%s
+                          WHERE password_forgot_token=%s;""",
+    "add_change_password_token": """UPDATE ACM_WC
+                                    SET password_forgot_token=%s
+                                    WHERE email=%s;""",
+    "add_confirmation_token": """UPDATE ACM_WC
+                                 SET confirmation_token=%s
+                                  WHERE email=%s;""",
+    "add_file_submitted": """UPDATE ACM_WC
+                            SET file_submitted=%s
+                            WHERE email=%s;""",
+    "delete_file_submitted": """UPDATE ACM_WC
+                                SET file_submitted=NULL 
+                                WHERE email=%s;""",
 }
 
 
@@ -69,6 +84,26 @@ class UserExists(Exception):
     pass
 
 
+class FailedToAddChangePasswordToken(Exception):
+    pass
+
+
+class FailedToChangePassword(Exception):
+    pass
+
+
+class FailedToAddConfirmationToken(Exception):
+    pass
+
+
+class FailedToAddFile(Exception):
+    pass
+
+
+class FailedToRemoveFileEntry(Exception):
+    pass
+
+
 def _connection():
     return pymysql.connect(**mysql_config['connection'])
 
@@ -97,37 +132,42 @@ def create_table():
         con.close()
 
 
-def _user_exists(email):
+def user_exists(email):
     con = _connection()
-    user_exists = False
+    _user_exists = False
     try:
         with con.cursor() as cursor:
             cursor.execute(queries["check_user_exists"], email)
             if cursor.rowcount:
-                user_exists = True
+                _user_exists = True
         con.commit()
         con.close()
-        return user_exists
+        return _user_exists
     except Exception:
         raise FailedToCheckUserAlreadyExists("Failed To Check User Already Exists")
 
 
+def is_confirmed(email):
+    user = get_user_with_email(email)
+    return user["confirmed"]
+
+
 def create_user(first_name, surname, email, password, confirmation_token):
+    con = _connection()
     try:
-        if not _user_exists(email):
-            con = _connection()
+        if not user_exists(email):
             try:
                 with con.cursor() as cursor:
                     cursor.execute(queries["create_user"], (first_name, surname, email, password, confirmation_token))
                     con.commit()
             except Exception:
                 raise FailedToCreateUser("Failed To Create User")
-            finally:
-                con.close()
         else:
             raise UserExists("User Already Exists")
     except Exception as e:
         raise e
+    finally:
+        con.close()
 
 
 def confirm_token(confirmation_token):
@@ -148,7 +188,7 @@ def confirm_token(confirmation_token):
 
 def get_user_with_email(email):
     try:
-        if _user_exists(email):
+        if user_exists(email):
             con = _connection()
             try:
                 with con.cursor() as cursor:
@@ -166,14 +206,73 @@ def get_user_with_email(email):
         raise e
 
 
-def delete_user_given_id(email):
+def add_change_password_token(email, token):
+    con = _connection()
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(queries["add_change_password_token"], (token, email))
+        con.commit()
+    except Exception:
+        raise FailedToAddChangePasswordToken("Failed To Add Change Password Token")
+    finally:
+        con.close()
+
+
+def add_confirmation_token(email, token):
+    con = _connection()
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(queries["add_confirmation_token"], (token, email))
+        con.commit()
+    except Exception:
+        raise FailedToAddConfirmationToken("Failed To Add Confirmation Token")
+    finally:
+        con.close()
+
+
+def change_password(token, new_password):
+    con = _connection()
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(queries["change_password"], (new_password, token))
+        con.commit()
+    except Exception:
+        raise FailedToChangePassword("Failed To Change Password")
+    finally:
+        con.close()
+
+
+def delete_user_given_email(email):
     con = _connection()
     try:
         with con.cursor() as cursor:
             cursor.execute(queries["delete_user"], email)
-            con.commit()
-            con.close()
+        con.commit()
     except Exception:
         raise FailedToDeleteUser("Failed To Delete User")
+    finally:
+        con.close()
+
+
+def add_file_submitted(email, filename):
+    con = _connection()
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(queries["add_file_submitted"], (filename, email))
+        con.commit()
+    except Exception:
+        raise FailedToAddFile("Failed To Add File")
+    finally:
+        con.close()
+
+
+def remove_file_entry(email):
+    con = _connection()
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(queries["delete_file_submitted"], email)
+        con.commit()
+    except Exception:
+        raise FailedToRemoveFileEntry("Failed To Remove File")
     finally:
         con.close()

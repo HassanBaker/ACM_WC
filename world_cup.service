@@ -1,0 +1,11 @@
+[Unit]
+Description=World Cup Predictor Site
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3.5 -m [location of flask app] >> [location of log file]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

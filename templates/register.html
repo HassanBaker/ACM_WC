@@ -43,7 +43,7 @@
 
                 {% endfor %}
                 {% if FORGOT_PASS %}
-                    <a href="/forgotten-password">Click here if you forgot your password</a>
+                    <a href="#forgot-password-modal" class="modal-trigger">Click here if you forgot your password</a>
                 {% endif %}
             </div>
 
@@ -88,6 +88,36 @@
 				</div>
             </div>
         </div>
+
+        <div id="forgot-password-modal" class="modal active">
+            <div class="modal-content">
+                <div id="forgot-password" class="container">
+                    <form method="POST" action="/forgotten-password" class="col row s12">
+                        <p class="flow-text">
+                            Please enter your email and we will send you a link to reset your password.
+                        </p>
+                        <br>
+                        <div class="row">
+
+                            <div class="input-field">
+                                <label for="login-email">Email</label>
+                                <input name="email" type="text" id="login-email" required>
+                            </div>
+
+                        </div>
+
+                        <button class="btn waves-effect waves-light black" type="submit">
+                            Submit
+                            <i class="mdi-content-send right"></i>
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
     </main>
 
     <script type="text/javascript">
@@ -108,8 +138,6 @@
             });
         }
 
-        $(document).ready(passwordMatch())
-
-
+        $(document).ready(passwordMatch());
     </script>
 {% endblock %}

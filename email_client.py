@@ -29,9 +29,19 @@ class Email_Client:
         Thank you for registering for our world cup predictor competition.
         You're nearly done. Just follow the link to complete registration\n\n
         Confirmation Link: {}\n\n
-        We wish you the best of luck""".format(first_name,
-                                               surname,
-                                               link)
+        We wish you the best of luck.""".format(first_name,
+                                                surname,
+                                                link)
+        return subject, message_body
+
+    def create_change_password_email(self, first_name, surname, link):
+        subject = "NO-REPLY:ACM Wold Cup Predictor Competition Registration"
+        message_body = """Hello {} {}\n
+        You have requested to change your password. Please follow the link to do so.\n\n
+        Change Password Link: {}\n\n
+        We wish you the best of luck.""".format(first_name,
+                                                surname,
+                                                link)
         return subject, message_body
 
     def send_email(self, subject, message_body, recipients=[]):

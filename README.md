@@ -6,12 +6,12 @@ Kaggle like site for the world cup prediction competition.
 
 ## How to setup
 
-Make sure you install all the requirments; `pip install requirments.txt`
+Make sure you install all the requirements; `pip install requirments.txt`
 
 You will then need to place a config folder in the root project directory.
 
 Place the location of the app, and where you want the logging file to reside in the **world_cup.service file**  
-Place the **world_cup.service** in `/etc/systemd/`
+Place the **world_cup.service** in `/etc/systemd/system`
 
 Run this command `service world_cup start`  
 Check that it's running by using `service world_cup stop`

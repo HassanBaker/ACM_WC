@@ -1,4 +1,5 @@
 import os
+import jinja2
 
 from flask import Flask, flash, url_for, render_template, request, session, redirect
 from passlib.hash import bcrypt_sha256
@@ -18,6 +19,12 @@ app.config["PERMANENT_SESSION_LIFETIME"] = 60 * 10  # seconds
 app.config['UPLOAD_FOLDER'] = config.submission_dir
 
 mail_client = Email_Client(**config.email_config)
+
+my_loader = jinja2.ChoiceLoader([
+    app.jinja_loader,
+    jinja2.FileSystemLoader(config.TEMPLATES_LOCATION),
+])
+app.jinja_loader = my_loader
 
 
 @app.route('/', methods=["GET"])

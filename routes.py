@@ -11,20 +11,14 @@ import config
 from email_client import Email_Client
 
 # Flask app configuration
-app = Flask("ACM_WC")
+app = Flask("ACM_WC", static_folder=config.STATIC_DIR, template_folder=config.TEMPLATES_DIR)
 app.secret_key = config.SECRET_KEY
 app.config["SESSION_REFRESH_EACH_REQUEST"] = True
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["PERMANENT_SESSION_LIFETIME"] = 60 * 10  # seconds
-app.config['UPLOAD_FOLDER'] = config.submission_dir
+app.config['UPLOAD_FOLDER'] = config.SUBMISSION_DIR
 
 mail_client = Email_Client(**config.email_config)
-
-my_loader = jinja2.ChoiceLoader([
-    app.jinja_loader,
-    jinja2.FileSystemLoader(config.TEMPLATES_LOCATION),
-])
-app.jinja_loader = my_loader
 
 
 @app.route('/', methods=["GET"])

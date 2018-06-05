@@ -4,9 +4,9 @@ import string
 from functools import wraps
 import pandas as pd
 import os
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, validators
 from flask import flash, url_for, session, redirect
-from config import csv_file_string_entries, ALLOWED_EXTENSIONS, submission_dir
+from config import csv_file_string_entries, ALLOWED_EXTENSIONS, SUBMISSION_DIR
 
 
 def token_generator(size=20, chars=string.ascii_uppercase + string.digits):
@@ -143,5 +143,5 @@ def delete_users_submission_directory(directory):
 
 
 def create_submissions_directory():
-    if not os.path.isdir(submission_dir):
-        os.makedirs(submission_dir)
+    if not os.path.isdir(SUBMISSION_DIR):
+        os.makedirs(SUBMISSION_DIR)

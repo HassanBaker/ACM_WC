@@ -23,21 +23,46 @@
                     <p class="flow-text">Researchers at the Insight National Centre for Data Analytics and the UCC student’s chapter of the Association for Computing Machinery (ACM) are running a 3 week competition period where we encourage participants to build their own predictor using whatever dataset and method they want.</p>
                     <p class="flow-text">At the end of challenge period, participants will submit their predictor code and predictions for every match including knockout stages on or before <b>Jun 14th 2018</b>. A scoring system has been designed to evaluate the effectiveness of the predictors and the winners will announced after the world cup finals.</p>
                     <br>
-{#                    <div style="transform: translate3d(0%, 0%, 0px);" class="row container valign-wrapper center-align">#}
-{#                    <div class="overlay container-item col s12 m3 l3">#}
-{#                        <img width="170%" style="padding-right: 40%" src="{{ url_for('static', filename='assets/insight_logo_transparent.png') }}">#}
-{#                    </div>#}
-{#                    <div  class="container-item col s12 m3 l3">#}
-{#                        <img width="100%" style="padding-left: 20%" src="{{ url_for('static', filename='assets/ACM_Student_Chapter_Logo.png') }}">#}
-{#                    </div>#}
-{#                    <div class="container-item col s12 m3 l3">#}
-{#                        <img width="180%" style="padding-right: 30%" src="{{ url_for('static', filename='assets/UCC_logo.png') }}">#}
-{#                    </div>#}
-{#                    </div>#}
-{#                    <br>#}
-                    <h3 class="header center-align">Registration Is Now Open</h3>
+
+                    <div  class="container-item col s12 m6 l3">
+                        <img
+                             style="width: 100%;
+                             display: block;
+                             margin-left: auto;
+                             margin-right: auto"
+                             src="{{ url_for('static', filename='assets/insight_logo_transparent.png') }}">
+                    </div>
+                    <div style="margin-top: -2%;" class="container-item col s12 m6 l3">
+                        <img
+                             style="width: 60%;
+                             display: block;
+                             margin-left: auto;
+                             margin-right: auto;"
+                             src="{{ url_for('static', filename='assets/ACM_2.png') }}">
+                    </div>
+                    <div class="container-item col s12 m6 l3">
+                        <img
+                             style="width: 60%;
+                             display: block;
+                             margin-left: auto;
+                             margin-right: auto"
+                             src="{{ url_for('static', filename='assets/netsoc.png') }}">
+                    </div>
+                    <div class="container-item col s12 m6 l3">
+                        <img
+                             style="
+                             width: 100%;
+                             display: block;
+                             margin-left: auto;
+                             margin-right: auto"
+                             src="{{ url_for('static', filename='assets/UCC_logo_2.png') }}">
+                    </div>
+
+
                     <br>
-                    <div class="center-align">
+                    <h3 class="container-item col s12 m12 l12 header center-align">Registration Is Now Open</h3>
+                    <br>
+                    <div class="container-item col s12 m12 l12 center-align">
                         <a href="/register" class="waves-effect waves-light btn-large #42a5f5 blue lighten-1">Register</a>
                     </div>
                     <br>
@@ -54,62 +79,7 @@
       </div>
     </div>
 
-     <div class="section white black-text" id="sponsors">
-        <div class="row container">
-          <h2 class="header">Prizes</h2>
-        </div>
-         <div class="row container">
-            <div class="container-item col s12 m12 l12">
-                <div class="card-content">
-                    <p class="flow-text">
-                        We're giving away more than <b>€1,000</b> worth of prizes, all thanks to our wonderful sponsors.
-                    </p>
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="https://www.nitrosell.com/">
-                                    <img
-                                         width="70%"
-                                         style="padding-right: 30%"
-                                         src="http://www.rrdisti.com/NitroSellLogo.jpg">
-                                    </a>
-                                </td>
-                                <td>
-                                    <h1 class="center-align">PlayStation 4</h1>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="https://www.choice.ie/">
-                                    <img
-                                         width="70%"
-                                         style="padding-right: 30%"
-                                         src="https://static.wixstatic.com/media/8bf764_a2b0135a3377493bb93eeaf10fb6c6cc~mv2.jpg/v1/fill/w_339,h_116,al_c,q_80,usm_0.66_1.00_0.01/8bf764_a2b0135a3377493bb93eeaf10fb6c6cc~mv2.webp">
-                                    </a>
-                                </td>
-                                <td>
-                                    <h1 class="center-align">PlayStation 4</h1>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-         </div>
-     </div>
-
-    <div class="parallax-container">
-      <div class="parallax">
-           <img height="110%"
-                style="display: block; transform: translate3d(-50%, 201px, 0px);"
-                src=http://digitalspyuk.cdnds.net/16/27/480x240/landscape-1467900630-germany-pens.gif>
-      </div>
-    </div>
-
-
-    {#  Competition Section  #}
+        {#  Competition Section  #}
     <div id="competition" class="section white black-text">
         <br>
         <div class="row container">
@@ -420,6 +390,49 @@
 
         </div>
     </div>
+
+    <div class="parallax-container">
+      <div class="parallax">
+           <img height="110%"
+                style="display: block; transform: translate3d(-50%, 201px, 0px);"
+                src=http://digitalspyuk.cdnds.net/16/27/480x240/landscape-1467900630-germany-pens.gif>
+      </div>
+    </div>
+
+
+     <div class="section white black-text" id="sponsors">
+        <div class="row container">
+          <h2 class="header">Sponsors</h2>
+        </div>
+         <div class="row container">
+            <div class="container-item col s12 m12 l12">
+                <div class="card-content">
+                    <p class="flow-text">
+                        We're giving away more than <b>€1,000</b> worth of prizes, including a <b>Playstation 4</b>, with more to be announced. This is all thanks to our wonderful sponsors.
+                    </p>
+
+                    <div class="container-item col s12 m12 l4">
+                         <a href="https://www.nitrosell.com/">
+                             <img
+                                 width="100%"
+                                 src="http://www.rrdisti.com/NitroSellLogo.jpg">
+                            </a>
+
+                    </div>
+
+                    <div class="row container-item col s12 m12 l4">
+                        <a href="https://www.choice.ie/">
+                            <img
+                                 width="100%"
+                                 style="margin-top: 10%"
+                                 src="https://static.wixstatic.com/media/8bf764_a2b0135a3377493bb93eeaf10fb6c6cc~mv2.jpg/v1/fill/w_339,h_116,al_c,q_80,usm_0.66_1.00_0.01/8bf764_a2b0135a3377493bb93eeaf10fb6c6cc~mv2.webp">
+                            </a>
+                    </div>
+                </div>
+            </div>
+         </div>
+     </div>
+
 
     <div class="parallax-container">
       <div class="parallax">

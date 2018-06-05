@@ -1,5 +1,4 @@
 import os
-import jinja2
 
 from flask import Flask, flash, url_for, render_template, request, session, redirect
 from passlib.hash import bcrypt_sha256

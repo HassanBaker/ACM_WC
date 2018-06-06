@@ -1,0 +1,67 @@
+{% extends "skeleton.html" %}
+{% block body %}
+    {{ super() }}
+    <br>
+    <h3 class="center-align">Netsoc Data Protection Policy</h3>
+
+    <section class="container">
+
+        <h5>Background</h5>
+
+        <p>The Elected Society Officer has recently been elected to assume a position of responsibility in UCC’s Netsoc (the “Society”). As a result, the Elected Society Officer will have access to fellow Society member’s personal data, gathered for the purposes of recording and administering their membership of the Society. This Agreement sets out the rights and responsibilities of Society Officer with respect to that data and to ensure the Society Officer understands their confidentiality and data protection obligations.</p>
+
+        <p>Accordingly, the Elected Student Officer hereby acknowledges and agrees as follows:</p>
+        <ol>
+            <li>
+               For the purposes of this Agreement, “Society Personal Data” means any and all information (in any form or media), gathered on behalf of the Society, from which a member or other person associated with the Society can be identified. Society Personal Data includes, without limitation, a phone number and/or e-mail address of a Society member. Subject to the terms below, the Elected Society Officer is authorised to access and use Society Personal Data to communicate with Society members about the Society’s activities and events in a responsible manner (the “Permitted Purpose”) but for no other purpose.
+            </li>
+            <li>
+                Mailing lists operated electronically (e.g. via e-mail or text) using Society Personal Data should only operate on opt-in basis and each communication should contain an explicit opt-out option enabling members to remove themselves from future mailings. It is the responsibility of the Society Officer sending the communication to ensure he or she is aware of the Society members who have opted-out of receiving communications about Society events and activities and to ensure they are not included in the communication.
+            </li>
+            <li>
+                Any e-mails communications been sent to the members of the Society for the Permitted Purpose should be done using the BCC (blind carbon copy) field (to prevent the unnecessary disclosure of all the intended recipients email addresses to others).
+            </li>
+            <li>
+                The Elected Society Officer is responsible for ensuring the Society Personal Data is kept confidential and secure and in such a way that it does not permit unauthorised access (intentionally, accidentally or otherwise).
+            </li>
+            <li>
+                The Elected Society Officer shall not disclose Society Personal Data to any person unless: (a) person to whom it is disclosed is authorised to access Society Personal Data for the Permitted Purpose; or (b) UCC’s Head of Student Experience has given the Society Officer his or her prior written consent.
+            </li>
+            <li>
+                The Elected Society Officer shall immediately notify UCC’s Head of Student Experience upon learning of any event that creates a risk of unauthorised access or use of Society Personal Data;
+            </li>
+            <li>
+                The Elected Society Officer shall comply with all guidelines issued by UCC, from time to time, with respect to use of Society Personal Data.
+            </li>
+            <li>
+                This Agreement shall terminate automatically upon the expiration of the Society Officer’s term of office in the Society or earlier at UCC’s discretion. Upon termination of this Agreement, the Society Officer shall return copies of Society Personal Data held by the Society Officer to UCC’s Head of Student Experience (or his/her nominee) or cause it to be deleted or destroyed (so that thereafter it cannot practicably be read or reconstructed) by the Society Officer or any other person.
+            </li>
+            <li>
+                If any breach of this Agreement is observed, then (in addition to other remedies) disciplinary action up to and including dismissal or expulsion may be taken in accordance with the UCC's disciplinary procedures.
+            </li>
+        </ol>
+        <p>This Agreement will be governed and construed in accordance with Irish Law and the parties submit to the exclusive jurisdiction of the Irish Courts.</p>
+    </section>
+
+    <div class="section">
+            <div class="row container col s12 m12 l1 center-align">
+                <a href="mailto:ucccsacm@gmail.com" target="_blank">
+                        <img width="60" src="{{ url_for('static', filename='assets/icons/email.png') }}">
+                </a>
+                <a href="https://www.facebook.com/uccacmchapter/" target="_blank">
+                        <img width="60" src="{{ url_for('static', filename='assets/icons/fb.png') }}">
+                </a>
+                <a href="https://twitter.com/uccacm" target="_blank">
+                        <img width="60" src="{{ url_for('static', filename='assets/icons/twitter.png') }}">
+                </a>
+                <a href="https://www.instagram.com/uccacmchapter/" target="_blank">
+                        <img width="60" src="{{ url_for('static', filename='assets/icons/insta.png') }}">
+                </a>
+            </div>
+        <div class="footer-copyright">
+                <div class="container">
+                We use cookies for account registration, login features, and form submission. Read our full <a href="/cookies-policy">cookie policy</a> and <a href="/privacy-statement">privacy statement</a>.
+                </div>
+              </div>
+        </div>
+{% endblock %}

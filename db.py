@@ -14,6 +14,7 @@ queries = {
                       confirmation_token VARCHAR(20),
                       password_forgot_token VARCHAR(20),
                       file_submitted VARCHAR (100),
+                      photo_opt_in BOOLEAN NOT NULL,
                       constraint pk primary key (id));""",
     "check_user_exists": """SELECT email FROM ACM_WC WHERE email=%s;""",
     "create_user": """INSERT INTO ACM_WC (
@@ -22,8 +23,9 @@ queries = {
                       email,
                       password,
                       confirmed,
-                      confirmation_token)
-                      VALUES (%s, %s, %s, %s, FALSE, %s)""",
+                      confirmation_token,
+                      photo_opt_in)
+                      VALUES (%s, %s, %s, %s, FALSE, %s, %s)""",
     "id_from_confirmation_token": """SELECT id FROM ACM_WC WHERE confirmation_token=%s""",
     "confirm_user": """UPDATE ACM_WC
                         SET confirmation_token=NULL, confirmed=TRUE 
@@ -152,13 +154,13 @@ def is_confirmed(email):
     return user["confirmed"]
 
 
-def create_user(first_name, surname, email, password, confirmation_token):
+def create_user(first_name, surname, email, password, confirmation_token, opt_in):
     con = _connection()
     try:
         if not user_exists(email):
             try:
                 with con.cursor() as cursor:
-                    cursor.execute(queries["create_user"], (first_name, surname, email, password, confirmation_token))
+                    cursor.execute(queries["create_user"], (first_name, surname, email, password, confirmation_token, opt_in))
                     con.commit()
             except Exception:
                 raise FailedToCreateUser("Failed To Create User")

@@ -19,6 +19,11 @@ app.config['UPLOAD_FOLDER'] = config.SUBMISSION_DIR
 mail_client = Email_Client(**config.email_config)
 
 
+@app.route("/netsoc-policy", methods=["GET"])
+def netsoc_prolicy():
+    return render_template("netsoc_policy.html")
+
+
 @app.route("/cookies-policy", methods=["GET"])
 def cookies_policy():
     return render_template("cookies_policy.html",
@@ -26,8 +31,8 @@ def cookies_policy():
                            LOGGED_IN=tools.is_logged_in())
 
 
-@app.route("/privacy-statement", methods=["GET"])
-def privacy_statement():
+@app.route("/data-protection", methods=["GET"])
+def data_protection():
     return render_template("privacy.html",
                            COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                            LOGGED_IN=tools.is_logged_in()
@@ -58,6 +63,7 @@ def register():
 
 @app.route('/register-form', methods=["POST"])
 def register_form():
+    print("photo-opt-in" in request.form)
     form = tools.RegisterForm(request.form)
     if form.validate():
         first_name = form.first_name.data
@@ -66,7 +72,7 @@ def register_form():
         password = bcrypt_sha256.using(salt=config.salt).hash(str(form.password.data))
         token = tools.token_generator()
         try:
-            db.create_user(first_name, surname, email, password, token)
+            db.create_user(first_name, surname, email, password, token, "photo-opt-in" in request.form)
             link = config.url + "/register-confirmation?t=" + token
             subject, body = mail_client.create_registration_completion_email(first_name, surname, link)
             email_sent = mail_client.send_email(subject, body, [email])

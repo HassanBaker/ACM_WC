@@ -78,10 +78,52 @@
                             <span class="new badge red" id="passwords-badge" data-badge-caption="" hidden>Passwords do not match</span>
 						</div>
 					</div>
-					<button class="btn waves-effect waves-light black" type="submit" id="register-submit" disabled>
+
+                     <!-- Modal Trigger -->
+                      <button class="btn waves-effect waves-light black modal-trigger" href="#modal1" id="register-submit" disabled>Submit</button>
+
+                      <!-- Modal Structure -->
+                      <div id="modal1" class="modal">
+                          <div class="modal-content">
+                              <h4>User Privacy Notice</h4>
+                              <p>At University College Cork, we treat your privacy seriously. Any personal data which you provide to the University will be treated with the highest standards of security and confidentiality, in accordance with Irish and European Data Protection legislation. This notice sets out details of the information that we collect, how we process it and who we share it with. It also explains your rights under data protection law in relation to our processing of your data.</p>
+                              <p>By clicking 'agree' below, you are agreeing to allow us to store your information in a secure manner following the details outlined in our <a href="/data-protection">data protection statement</a>. The information this relates to is:</p>
+                              <ul class="collection center-align">
+                                  <li class="collection-item">Your first name</li>
+                                  <li class="collection-item">Your last name</li>
+                                  <li class="collection-item">Your email address</li>
+                                  <li class="collection-item">Your password (encrypted)</li>
+                                  <li class="collection-item">Your CSV submission file</li>
+                              </ul>
+                              <p>Furthermore, by clicking 'agree' below, you also agree to abide by the competitions rules</p>
+                              <ol class="collection">
+                                  <li class="collection-item">Only one submission per person, latest submission before deadline counts.</li>
+                                  <li class="collection-item">Predictor must be your own work.</li>
+                                  <li class="collection-item">Predictions submitted must come from the submitted Predictor code.</li>
+                                  <li class="collection-item">Only consistent predictions are allowed eg. Brazil to lose in semi final and Brazil to win the final are contradicting.</li>
+                                  <li class="collection-item">Predictions must be in the required format and valid, otherwise will not be accepted.</li>
+                                  <li class="collection-item">All decisions made by the organizing committee are final.</li>
+                                  <li class="collection-item">We reserve the right to disqualify participants and withhold the prizes for unfair behaviour or breaking of rules. </li>
+                                  <li class="collection-item">The winning predictors code must be demonstrated.</li>
+                                  <li class="collection-item">Only predictions coming from a predictor built by the participant are valid entries to this competition.</li>
+                                  <li class="collection-item">By taking part in this competition you are agreeing to allow us to collect and store a real name and email address in line with the new GDPR guidelines for the duration of the competition. All information will be deleted after the event.</li>
+                              </ol>
+                                <div class="center-align">
+                                   <p>
+                                       <span class="left-align">You have the option to have your photo taken with the event organisers if you are a winner. Opt in if you would like this.</span>
+                                       <input id="photo-opt-in" type="checkbox" name="photo-opt-in" />
+                                      <label for="photo-opt-in">Opt In</label>
+                                    </p>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+
+                              <a href="#!" class="item modal-close waves-effect waves-green btn-flat">Disgree</a>
+                              					<button class="btn waves-effect waves-light black" type="submit">
 						Submit
-						<i class="mdi-content-send right"></i>
 					</button>
+                          </div>
+                      </div>
 				</form>
                 <div style="padding: 0 1em;" class="error-message red-text row s6">
 					<i> {{ REGISTRATION_MESSAGE }} </i>

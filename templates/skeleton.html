@@ -4,10 +4,11 @@
     {% block head %}
     <meta charset="UTF-8">
     <title>Predict The World Cup</title>
-    <link rel="shortcut icon" href="http://insight-centre.org/sites/all/themes/insight_theme/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/icons/favicon.ico') }}" type="image/x-icon">
     <meta property="og:image" content="{{ url_for('static', filename='assets/ai_4.jpg') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <style>
@@ -32,16 +33,16 @@
             <div class="right-align"><a href="/accept-policy"><i class="material-icons">close</i></a></div>
 
             <h5>We use cookies for account registration, login features, and form submission. Read our full <a href="/cookies-policy">cookie policy</a> and
-                <a href="/privacy-statement">privacy statement</a>.</h5>
+                <a href="/data-protection">data protection statement</a>.</h5>
         </section>
         {% endif %}
 
-        <nav class="navbar-fixed nav-extended white">
+        <nav class="nav-extended white">
             <div class="container">
                 <div class="nav-wrapper black-text white" style="padding-right: 5%;padding-left: 1%">
                     <div class="brand-logo">
                         <a href="/">
-                            <img src="http://insight-centre.org/sites/all/themes/insight_theme/favicon.ico" class="responsive-img center-align"
+                            <img src="{{ url_for('static', filename='assets/icons/favicon.ico') }}" class="responsive-img center-align"
                                  style="height: 65px;padding-bottom: 30%; padding-top: 30%">
                         </a>
                     </div>
@@ -104,7 +105,6 @@
             $('.modal').modal();
             $('.collapsible').collapsible();
             $('.dropdown-trigger').dropdown();
-
             });
 
 

@@ -14,7 +14,7 @@ Place the location of the app, and where you want the logging file to reside in 
 Place the **world_cup.service** in `/etc/systemd/system`
 
 Run this command `service world_cup start`  
-Check that it's running by using `service world_cup stop`
+Check that it's running by using `service world_cup status`
 
 Add the port number to **wp-predictor.insight-centre.org.conf**  
 Place **wp-predictor.insight-centre.org.conf** in `/etc/apache2/sites-available`  

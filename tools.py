@@ -46,6 +46,10 @@ class ChangePasswordForm(Form):
     confirmation_password = PasswordField('confirmation_password')
 
 
+def show_cookies_policy():
+    return "accepted_policy" not in session
+
+
 def protected(f: object) -> object:
     @wraps(f)
     def wrap(*args, **kwargs):

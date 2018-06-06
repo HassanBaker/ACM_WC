@@ -14,20 +14,36 @@ app = Flask("ACM_WC", static_folder=config.STATIC_DIR, template_folder=config.TE
 app.secret_key = config.SECRET_KEY
 app.config["SESSION_REFRESH_EACH_REQUEST"] = True
 app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["PERMANENT_SESSION_LIFETIME"] = 60 * 10  # seconds
 app.config['UPLOAD_FOLDER'] = config.SUBMISSION_DIR
 
 mail_client = Email_Client(**config.email_config)
 
 
+@app.route("/cookies-policy", methods=["GET"])
+def cookies_policy():
+    return render_template("cookies_policy.html",  COOKIES_NOTIFICATION=tools.show_cookies_policy())
+
+
+@app.route("/privacy-statement", methods=["GET"])
+def privacy_statement():
+    return render_template("privacy.html",  COOKIES_NOTIFICATION=tools.show_cookies_policy())
+
+
+@app.route('/accept-policy', methods=["GET"])
+def accept_policy():
+    print(request.referrer)
+    session["accepted_policy"] = True
+    return redirect(request.referrer)
+
+
 @app.route('/', methods=["GET"])
 def home():
-    return render_template("index.html")
+    return render_template("index.html", COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
 
 @app.route('/register', methods=["GET"])
 def register():
-    return render_template("register.html")
+    return render_template("register.html", COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
 
 @app.route('/register-form', methods=["POST"])
@@ -84,7 +100,7 @@ def login():
                 flash("Failed to login, please check both email and password are correct")
                 return redirect(url_for('register'))
     else:
-        return render_template('register.html')
+        return render_template('register.html', COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
 
 @app.route("/logout", methods=["POST"])
@@ -120,17 +136,17 @@ def change_password():
         token = request.args.get("t")
         if token is None:
             return render_template('register.html')
-        return render_template('change_password.html', TOKEN=token)
+        return render_template('change_password.html', TOKEN=token, COOKIES_NOTIFICATION=tools.show_cookies_policy())
     elif request.method == "POST":
         try:
             form = tools.ChangePasswordForm(request.form)
             password = bcrypt_sha256.using(salt=config.salt).hash(str(form.password.data))
             db.change_password(form.token.data, password)
             flash("You have successfully changed your password")
-            return render_template("register.html")
+            return render_template("register.html", COOKIES_NOTIFICATION=tools.show_cookies_policy())
         except Exception as e:
             flash("Your password was not changed, please contact us at [email] and we will assist you promptly.")
-            return render_template('change_password.html')
+            return render_template('change_password.html', COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
 
 @app.route('/send-verification-code', methods=["GET"])
@@ -155,11 +171,12 @@ def admin():
         return render_template("admin.html",
                                CONFIRMED=db.is_confirmed(session['email']),
                                FIRST_NAME=user['first_name'],
-                               SUBMITTED=user["file_submitted"])
+                               SUBMITTED=user["file_submitted"],
+                               COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
     except Exception as e:
         flash("An issue has occurred")
-        return redirect(url_for('register'))
+        return redirect(url_for('register', COOKIES_NOTIFICATION=tools.show_cookies_policy()))
 
 
 @app.route("/upload-file", methods=["POST"])
@@ -183,7 +200,8 @@ def upload_file():
             return redirect(url_for('admin',
                                     CONFIRMED=db.is_confirmed(session['email']),
                                     FIRST_NAME=user['first_name'],
-                                    SUBMITTED=user["file_submitted"]))
+                                    SUBMITTED=user["file_submitted"],
+                                    COOKIES_NOTIFICATION=tools.show_cookies_policy()))
         try:
             errors_in_file = tools.errors_in_submission_file(file)
             if len(errors_in_file) is not 0:
@@ -193,14 +211,16 @@ def upload_file():
                 return redirect(url_for('admin',
                                         CONFIRMED=db.is_confirmed(session['email']),
                                         FIRST_NAME=user['first_name'],
-                                        SUBMITTED=user["file_submitted"]))
+                                        SUBMITTED=user["file_submitted"],
+                                        COOKIES_NOTIFICATION=tools.show_cookies_policy()))
         except Exception as e:
             flash("File contains errors, please fix them:")
             flash(str(e))
             return redirect(url_for('admin',
                                     CONFIRMED=db.is_confirmed(session['email']),
                                     FIRST_NAME=user['first_name'],
-                                    SUBMITTED=user["file_submitted"]))
+                                    SUBMITTED=user["file_submitted"],
+                                    COOKIES_NOTIFICATION=tools.show_cookies_policy()))
 
         if file:
             filename = secure_filename(file.filename)
@@ -212,7 +232,8 @@ def upload_file():
             return redirect(url_for("admin",
                                     CONFIRMED=db.is_confirmed(session['email']),
                                     FIRST_NAME=user['first_name'],
-                                    SUBMITTED=file.filename))
+                                    SUBMITTED=file.filename,
+                                    COOKIES_NOTIFICATION=tools.show_cookies_policy()))
     except Exception as e:
         flash("An issue has occurred, please try another time, or contact us at [email]")
         return redirect(url_for('admin'))
@@ -230,14 +251,15 @@ def delete_submission():
         return redirect(url_for('admin',
                                 CONFIRMED=db.is_confirmed(session['email']),
                                 FIRST_NAME=user['first_name'],
-                                SUBMITTED=user["file_submitted"]))
+                                SUBMITTED=user["file_submitted"],
+                                COOKIES_NOTIFICATION=tools.show_cookies_policy()))
     except Exception as e:
         flash("Experienced an error processing your request, please contact us at [email]")
         return render_template('admin.html',
                                CONFIRMED=db.is_confirmed(session['email']),
                                FIRST_NAME=user['first_name'],
-                               SUBMITTED=user["file_submitted"]
-                               )
+                               SUBMITTED=user["file_submitted"],
+                               COOKIES_NOTIFICATION=tools.show_cookies_policy())
 
 
 @app.route("/delete-account", methods=["GET"])
@@ -257,5 +279,5 @@ def delete_account():
         return redirect(url_for('admin',
                                 CONFIRMED=db.is_confirmed(session['email']),
                                 FIRST_NAME=user['first_name'],
-                                SUBMITTED=user["file_submitted"]
-                                ))
+                                SUBMITTED=user["file_submitted"],
+                                COOKIES_NOTIFICATION=tools.show_cookies_policy()))

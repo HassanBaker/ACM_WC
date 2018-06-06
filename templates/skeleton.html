@@ -26,67 +26,77 @@
 
 <body class="white">
     {% block body %}
-    <nav class="navbar-fixed nav-extended white">
-        <div class="container">
-            <div class="nav-wrapper black-text white" style="padding-right: 5%;padding-left: 1%">
-                <div class="brand-logo">
-                    <a href="/">
-                        <img src="http://insight-centre.org/sites/all/themes/insight_theme/favicon.ico" class="responsive-img center-align"
-                             style="height: 65px;padding-bottom: 30%; padding-top: 30%">
-                    </a>
+        {% if COOKIES_NOTIFICATION %}
+        <section class="container">
+        <br>
+            <div class="right-align"><a href="/accept-policy"><i class="material-icons">close</i></a></div>
+
+            <h5>We use cookies for account registration, login features, and form submission. Read our full <a href="/cookies-policy">cookie policy</a> and
+                <a href="/privacy-statement">privacy statement</a>.</h5>
+        </section>
+        {% endif %}
+
+        <nav class="navbar-fixed nav-extended white">
+            <div class="container">
+                <div class="nav-wrapper black-text white" style="padding-right: 5%;padding-left: 1%">
+                    <div class="brand-logo">
+                        <a href="/">
+                            <img src="http://insight-centre.org/sites/all/themes/insight_theme/favicon.ico" class="responsive-img center-align"
+                                 style="height: 65px;padding-bottom: 30%; padding-top: 30%">
+                        </a>
+                    </div>
+                    <a href="#" data-activates="mobile-demo" class="black-text button-collapse"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down sidenav">
+                        <li>
+                            <a href="/#about" class="black-text">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/#competition" class="black-text">Competition</a>
+                        </li>
+                        <li>
+                            <a href="/#sponsors" class="black-text">Sponsors</a>
+                        </li>
+                        <li>
+                            <a href="/register" class="black-text">Login/Register</a>
+                        </li>
+                    </ul>
                 </div>
-                <a href="#" data-activates="mobile-demo" class="black-text button-collapse"><i class="material-icons">menu</i></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down sidenav">
-                    <li>
-                        <a href="/#about" class="black-text">About Us</a>
-                    </li>
-                    <li>
-                        <a href="/#competition" class="black-text">Competition</a>
-                    </li>
-                    <li>
-                        <a href="/#sponsors" class="black-text">Sponsors</a>
-                    </li>
-                    <li>
-                        <a href="/register" class="black-text">Login/Register</a>
-                    </li>
-                </ul>
             </div>
-        </div>
-    </nav>
-        <ul class="side-nav white" id="mobile-demo">
-                    <li>
-                        <a href="/#about">About Us</a>
-                    </li>
-                    <li>
-                        <a href="/#competition">Competition</a>
-                    </li>
-                    <li>
-                        <a href="/#sponsors">Sponsors</a>
-                    </li>
-                    <li>
-                        <a href="/register">Login/Register</a>
-                    </li>
-                </ul>
+        </nav>
+            <ul class="side-nav white" id="mobile-demo">
+                        <li>
+                            <a href="/#about">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/#competition">Competition</a>
+                        </li>
+                        <li>
+                            <a href="/#sponsors">Sponsors</a>
+                        </li>
+                        <li>
+                            <a href="/register">Login/Register</a>
+                        </li>
+                    </ul>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script type="text/javascript">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script type="text/javascript">
 
-        $(document).ready(function(){
+            $(document).ready(function(){
 
-        $('.parallax').parallax();
-        $(".button-collapse").sideNav();
-        });
+            $('.parallax').parallax();
+            $(".button-collapse").sideNav();
+            });
 
-        $(document).ready(function(){
-        $('.modal').modal();
-        $('.collapsible').collapsible();
-        $('.dropdown-trigger').dropdown();
+            $(document).ready(function(){
+            $('.modal').modal();
+            $('.collapsible').collapsible();
+            $('.dropdown-trigger').dropdown();
 
-        });
+            });
 
 
-    </script>
+        </script>
 
     {% endblock %}
 </body>

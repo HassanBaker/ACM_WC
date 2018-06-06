@@ -56,9 +56,15 @@
                         <li>
                             <a href="/#sponsors" class="black-text">Sponsors</a>
                         </li>
+                        {% if LOGGED_IN %}
+                        <li>
+                            <a href="/admin" class="black-text">Account</a>
+                        </li>
+                        {% else %}
                         <li>
                             <a href="/register" class="black-text">Login/Register</a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -73,9 +79,15 @@
                         <li>
                             <a href="/#sponsors">Sponsors</a>
                         </li>
+                        {% if LOGGED_IN %}
                         <li>
-                            <a href="/register">Login/Register</a>
+                            <a href="/admin" class="black-text">Account</a>
                         </li>
+                        {% else %}
+                        <li>
+                            <a href="/register" class="black-text">Login/Register</a>
+                        </li>
+                        {% endif %}
                     </ul>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

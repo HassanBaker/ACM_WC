@@ -46,6 +46,10 @@ class ChangePasswordForm(Form):
     confirmation_password = PasswordField('confirmation_password')
 
 
+def is_logged_in():
+    return 'logged_in' in session
+
+
 def show_cookies_policy():
     return "accepted_policy" not in session
 

@@ -20,7 +20,7 @@ mail_client = Email_Client(**config.email_config)
 
 
 @app.route("/netsoc-policy", methods=["GET"])
-def netsoc_prolicy():
+def netsoc_policy():
     return render_template("netsoc_policy.html")
 
 
@@ -199,7 +199,8 @@ def change_password():
                                    LOGGED_IN=tools.is_logged_in()
                                    )
         except Exception as e:
-            flash("Your password was not changed, please contact us at [email] and we will assist you promptly.")
+            flash("Your password was not changed, please contact us at %s and we will assist you promptly." %
+                  config.email_config["admin_email"])
             return render_template('change_password.html',
                                    COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                    LOGGED_IN=tools.is_logged_in()
@@ -310,7 +311,7 @@ def upload_file():
                                     LOGGED_IN=tools.is_logged_in()
                                     ))
     except Exception as e:
-        flash("An issue has occurred, please try another time, or contact us at [email]")
+        flash("An issue has occurred, please try another time, or contact us at %s" % config.email_config["admin_email"])
         return redirect(url_for('admin',
                                 COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                 LOGGED_IN=tools.is_logged_in()
@@ -333,7 +334,7 @@ def delete_submission():
                                 COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                 LOGGED_IN=tools.is_logged_in()))
     except Exception as e:
-        flash("Experienced an error processing your request, please contact us at [email]")
+        flash("Experienced an error processing your request, please contact us at %s" % config.email_config["admin_email"])
         return render_template('admin.html',
                                CONFIRMED=db.is_confirmed(session['email']),
                                FIRST_NAME=user['first_name'],
@@ -358,7 +359,7 @@ def delete_account():
         session['accepted_policy'] = accepted_policy
         return redirect(url_for('register'))
     except Exception as e:
-        flash("We apologise, and issue has occured, please contact us at [email]")
+        flash("We apologise, and issue has occured, please contact us at %s" % config.email_config["admin_email"])
         return redirect(url_for('admin',
                                 CONFIRMED=db.is_confirmed(session['email']),
                                 FIRST_NAME=user['first_name'],

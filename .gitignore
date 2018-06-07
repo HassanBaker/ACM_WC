@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 submissions/
 config.py
+deployment_config.py
 .idea/
 __pycache__/

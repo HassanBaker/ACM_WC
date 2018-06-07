@@ -63,7 +63,6 @@ def register():
 
 @app.route('/register-form', methods=["POST"])
 def register_form():
-    print("photo-opt-in" in request.form)
     form = tools.RegisterForm(request.form)
     if form.validate():
         first_name = form.first_name.data
@@ -75,7 +74,7 @@ def register_form():
             db.create_user(first_name, surname, email, password, token, "photo-opt-in" in request.form)
             link = config.url + "/register-confirmation?t=" + token
             subject, body = mail_client.create_registration_completion_email(first_name, surname, link)
-            email_sent = mail_client.send_email(subject, body, [email])
+            email_sent = mail_client.send_email(subject, body, email)
         except Exception as e:
             flash("User email already registered, sign in?")
             return redirect(url_for('register',
@@ -164,7 +163,7 @@ def forgotten_password():
             link = config.url + "/change-password?t=" + token
             subject, body = mail_client.create_change_password_email(
                 user['first_name'], user['surname'], link)
-            email_sent = mail_client.send_email(subject, body, [email])
+            email_sent = mail_client.send_email(subject, body, email)
             flash("We have sent emailed you a link to change your password")
             return render_template('register.html',
                                    COOKIES_NOTIFICATION=tools.show_cookies_policy(),
@@ -216,8 +215,8 @@ def send_verification_code():
     user = db.get_user_with_email(email)
     subject, body = mail_client.create_registration_completion_email(user['first_name'], user['surname'], link)
     db.add_confirmation_token(email, token)
-    email_sent = mail_client.send_email(subject, body, [email])
-    flash("Verification link is sent to your email")
+    email_sent = mail_client.send_email(subject, body, email)
+    flash("Verification link is sent to your email.")
     return render_template('admin.html', CONFIRMED=db.is_confirmed(email),
                            COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                            LOGGED_IN=tools.is_logged_in()

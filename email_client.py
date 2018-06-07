@@ -44,21 +44,20 @@ class Email_Client:
                                                 link)
         return subject, message_body
 
-    def send_email(self, subject, message_body, recipients=[]):
+    def send_email(self, subject, message_body, to_email=None):
         """
         Sends an email using the send grid API
-        :param recipients:
+        :param to_email:
         :param subject:
         :param message_body:
         :return:
         """
+        print(to_email)
         content = Content("text/plain", message_body)
-        mail = Mail(self._sender_email, subject, self._admin_email, content)
+        if to_email is None:
+            mail = Mail(self._sender_email, subject, self._admin_email, content)
+        else:
+            mail = Mail(self._sender_email, subject, Email(to_email), content)
 
-        if len(recipients) > 0:
-            recipients_personalization = Personalization()
-            for address in recipients:
-                recipients_personalization.add_to(email=Email(address))
-            mail.add_personalization(recipients_personalization)
         response = self._sg.client.mail.send.post(request_body=mail.get())
         return str(response.status_code).startswith("20")

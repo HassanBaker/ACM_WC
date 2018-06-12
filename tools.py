@@ -142,7 +142,7 @@ def errors_in_submission_file(file):
                                   (row_index + 1, column_index + 1))
             column_index += 1
         row_index += 1
-    return errors
+    return errors, file_df
 
 
 def delete_users_submission_directory(directory):

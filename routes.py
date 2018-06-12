@@ -8,6 +8,7 @@ import tools
 import db
 import config
 from email_client import Email_Client
+import pandas as pd
 
 # Flask app configuration
 app = Flask("ACM_WC", static_folder=config.STATIC_DIR, template_folder=config.TEMPLATES_DIR)
@@ -274,7 +275,7 @@ def upload_file():
                                     COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                     LOGGED_IN=tools.is_logged_in()))
         try:
-            errors_in_file = tools.errors_in_submission_file(file)
+            errors_in_file, file_df = tools.errors_in_submission_file(file)
             if len(errors_in_file) is not 0:
                 flash("File contains errors, please fix them:")
                 for error in errors_in_file:
@@ -300,7 +301,7 @@ def upload_file():
             user_directory = app.config['UPLOAD_FOLDER'] + "/" + str(user["id"])
             tools.delete_users_submission_directory(user_directory)
             os.makedirs(user_directory)
-            file.save(os.path.join(user_directory + "/", filename))
+            file_df.to_csv(os.path.join(user_directory + "/", filename))
             db.add_file_submitted(session["email"], filename)
             return redirect(url_for("admin",
                                     CONFIRMED=db.is_confirmed(session['email']),

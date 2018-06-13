@@ -34,36 +34,36 @@
                 </div>
 
             {% else %}
-
-                {% if SUBMITTED == None %}
+                {% if SUBMITTED == None%}
                     <p class="flow-text">
                         You have not submitted a file yet.
                     </p>
+                    {% if SUBMISSION_OPEN == True %}
+                        <p class="flow-text">
+                            Make sure you follow the <a href="#guidelines">submission rules & guidelines</a>
+                        </p>
 
-                    <p class="flow-text">
-                        Make sure you follow the <a href="#guidelines">submission rules & guidelines</a>
-                    </p>
-
-                    <form action="/upload-file" method="POST" enctype="multipart/form-data">
-                        <div class="file-field input-field">
-                            <div class="btn #42a5f5 blue lighten-1">
-                                <span>File</span>
-                                <input name="file" type="file">
+                        <form action="/upload-file" method="POST" enctype="multipart/form-data">
+                            <div class="file-field input-field">
+                                <div class="btn #42a5f5 blue lighten-1">
+                                    <span>File</span>
+                                    <input name="file" type="file">
+                                </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
                             </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                        </div>
-                    <button class="btn waves-effect waves-light black" value="upload" type="submit">
-						    Submit<i class="material-icons right">send</i>
-					</button>
-                    </form>
-                    <br>
-                    {% for message in get_flashed_messages() %}
-                        <div style="padding: 0 1em;" class="error-message red-text row s6">
-                            <i> {{ message }} </i>
-                        </div>
-                    {% endfor %}
+                            </div>
+                        <button class="btn waves-effect waves-light black" value="upload" type="submit">
+                                Submit<i class="material-icons right">send</i>
+                        </button>
+                        </form>
+                        <br>
+                        {% for message in get_flashed_messages() %}
+                            <div style="padding: 0 1em;" class="error-message red-text row s6">
+                                <i> {{ message }} </i>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
                 {% else %}
                     <h4>
@@ -81,11 +81,17 @@
                     {% endfor %}
                     <div id="delete-submission-modal" class="modal active">
                         <div class="modal-content">
-                            <div id="forgot-password" class="container">
+                            <div id="delete-submission" class="container">
                                 <div>
+                                    {% if SUBMISSION_OPEN == False %}
+                                        <p class="col row s12 l12 m12 flow-text center-align">
+                                        WARNING: It's past the deadline, you cannot resubmit!
+                                        </p>
+                                    {%  endif %}
                                     <p class="col row s12 l12 m12 flow-text center-align">
                                         Are you sure want to delete this submission?
                                     </p>
+
                                     <br>
                                     <a href="/delete-submission" class="col row s12 l12 m12 btn waves-effect waves-light black">
                                         Delete My Submission

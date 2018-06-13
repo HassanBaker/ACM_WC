@@ -8,7 +8,6 @@ import tools
 import db
 import config
 from email_client import Email_Client
-import pandas as pd
 
 # Flask app configuration
 app = Flask("ACM_WC", static_folder=config.STATIC_DIR, template_folder=config.TEMPLATES_DIR)
@@ -18,7 +17,6 @@ app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config['UPLOAD_FOLDER'] = config.SUBMISSION_DIR
 
 mail_client = Email_Client(**config.email_config)
-
 
 @app.route("/netsoc-policy", methods=["GET"])
 def netsoc_policy():
@@ -230,6 +228,7 @@ def admin():
     try:
         user = db.get_user_with_email(session['email'])
         return render_template("admin.html",
+                               SUBMISSION_OPEN=config.SUBMISSION_OPEN,
                                CONFIRMED=db.is_confirmed(session['email']),
                                FIRST_NAME=user['first_name'],
                                SUBMITTED=user["file_submitted"],
@@ -244,78 +243,81 @@ def admin():
                                 ))
 
 
-@app.route("/upload-file", methods=["POST"])
-@tools.protected
-def upload_file():
-    if 'file' not in request.files:
-        flash('No file submitted')
-        return redirect(url_for("admin",
-                                COOKIES_NOTIFICATION=tools.show_cookies_policy(),
-                                LOGGED_IN=tools.is_logged_in()
-                                ))
-    else:
-        file = request.files['file']
-        if file.filename == '':
+if config.SUBMISSION_OPEN:
+    @app.route("/upload-file", methods=["POST"])
+    @tools.protected
+    def upload_file():
+        if 'file' not in request.files:
             flash('No file submitted')
-            return redirect(url_for("admin"))
-        elif len(file.filename) > 100:
-            flash('Filename is too long, must be less than 100 characters')
             return redirect(url_for("admin",
                                     COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                     LOGGED_IN=tools.is_logged_in()
                                     ))
-    try:
-        user = db.get_user_with_email(session['email'])
-        if not tools.allowed_file(file.filename):
-            flash("File must have .csv extension!")
-            return redirect(url_for('admin',
-                                    CONFIRMED=db.is_confirmed(session['email']),
-                                    FIRST_NAME=user['first_name'],
-                                    SUBMITTED=user["file_submitted"],
-                                    COOKIES_NOTIFICATION=tools.show_cookies_policy(),
-                                    LOGGED_IN=tools.is_logged_in()))
+        else:
+            file = request.files['file']
+            if file.filename == '':
+                flash('No file submitted')
+                return redirect(url_for("admin"))
+            elif len(file.filename) > 100:
+                flash('Filename is too long, must be less than 100 characters')
+                return redirect(url_for("admin",
+                                        COOKIES_NOTIFICATION=tools.show_cookies_policy(),
+                                        LOGGED_IN=tools.is_logged_in()
+                                        ))
         try:
-            errors_in_file, file_df = tools.errors_in_submission_file(file)
-            if len(errors_in_file) is not 0:
-                flash("File contains errors, please fix them:")
-                for error in errors_in_file:
-                    flash(error)
+            user = db.get_user_with_email(session['email'])
+            if not tools.allowed_file(file.filename):
+                flash("File must have .csv extension!")
                 return redirect(url_for('admin',
                                         CONFIRMED=db.is_confirmed(session['email']),
                                         FIRST_NAME=user['first_name'],
                                         SUBMITTED=user["file_submitted"],
                                         COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                         LOGGED_IN=tools.is_logged_in()))
-        except Exception as e:
-            flash("File contains errors, please fix them:")
-            flash(str(e))
-            return redirect(url_for('admin',
-                                    CONFIRMED=db.is_confirmed(session['email']),
-                                    FIRST_NAME=user['first_name'],
-                                    SUBMITTED=user["file_submitted"],
-                                    COOKIES_NOTIFICATION=tools.show_cookies_policy(),
-                                    LOGGED_IN=tools.is_logged_in()))
+            try:
+                errors_in_file, file_df = tools.errors_in_submission_file(file)
+                if len(errors_in_file) is not 0:
+                    flash("File contains errors, please fix them:")
+                    for error in errors_in_file:
+                        flash(error)
+                    return redirect(url_for('admin',
+                                            CONFIRMED=db.is_confirmed(session['email']),
+                                            FIRST_NAME=user['first_name'],
+                                            SUBMITTED=user["file_submitted"],
+                                            COOKIES_NOTIFICATION=tools.show_cookies_policy(),
+                                            LOGGED_IN=tools.is_logged_in()))
+            except Exception as e:
+                flash("File contains errors, please fix them:")
+                flash(str(e))
+                return redirect(url_for('admin',
+                                        CONFIRMED=db.is_confirmed(session['email']),
+                                        FIRST_NAME=user['first_name'],
+                                        SUBMITTED=user["file_submitted"],
+                                        COOKIES_NOTIFICATION=tools.show_cookies_policy(),
+                                        LOGGED_IN=tools.is_logged_in()))
 
-        if file:
-            filename = secure_filename(file.filename)
-            user_directory = app.config['UPLOAD_FOLDER'] + "/" + str(user["id"])
-            tools.delete_users_submission_directory(user_directory)
-            os.makedirs(user_directory)
-            file_df.to_csv(os.path.join(user_directory + "/", filename))
-            db.add_file_submitted(session["email"], filename)
-            return redirect(url_for("admin",
-                                    CONFIRMED=db.is_confirmed(session['email']),
-                                    FIRST_NAME=user['first_name'],
-                                    SUBMITTED=file.filename,
+            if file:
+                filename = secure_filename(file.filename)
+                user_directory = app.config['UPLOAD_FOLDER'] + "/" + str(user["id"])
+                tools.delete_users_submission_directory(user_directory)
+                os.makedirs(user_directory)
+                file_df.to_csv(os.path.join(user_directory + "/", filename))
+                db.add_file_submitted(session["email"], filename)
+                return redirect(url_for("admin",
+                                        CONFIRMED=db.is_confirmed(session['email']),
+                                        FIRST_NAME=user['first_name'],
+                                        SUBMITTED=file.filename,
+                                        COOKIES_NOTIFICATION=tools.show_cookies_policy(),
+                                        LOGGED_IN=tools.is_logged_in()
+                                        ))
+        except Exception as e:
+            flash(
+                "An issue has occurred, please try another time, or contact us at %s" % config.email_config[
+                    "admin_email"])
+            return redirect(url_for('admin',
                                     COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                     LOGGED_IN=tools.is_logged_in()
                                     ))
-    except Exception as e:
-        flash("An issue has occurred, please try another time, or contact us at %s" % config.email_config["admin_email"])
-        return redirect(url_for('admin',
-                                COOKIES_NOTIFICATION=tools.show_cookies_policy(),
-                                LOGGED_IN=tools.is_logged_in()
-                                ))
 
 
 @app.route("/delete-submission", methods=["GET"])
@@ -328,14 +330,17 @@ def delete_submission():
         tools.delete_users_submission_directory(user_directory)
         flash("Successfully deleted your submission")
         return redirect(url_for('admin',
+                                SUBMISSION_OPEN=config.SUBMISSION_OPEN,
                                 CONFIRMED=db.is_confirmed(session['email']),
                                 FIRST_NAME=user['first_name'],
                                 SUBMITTED=user["file_submitted"],
                                 COOKIES_NOTIFICATION=tools.show_cookies_policy(),
                                 LOGGED_IN=tools.is_logged_in()))
     except Exception as e:
-        flash("Experienced an error processing your request, please contact us at %s" % config.email_config["admin_email"])
+        flash("Experienced an error processing your request, please contact us at %s" % config.email_config[
+            "admin_email"])
         return render_template('admin.html',
+                               SUBMISSION_OPEN=config.SUBMISSION_OPEN,
                                CONFIRMED=db.is_confirmed(session['email']),
                                FIRST_NAME=user['first_name'],
                                SUBMITTED=user["file_submitted"],

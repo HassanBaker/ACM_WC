@@ -8,6 +8,7 @@ import tools
 import db
 import config
 from email_client import Email_Client
+from score import get_scores
 
 # Flask app configuration
 app = Flask("ACM_WC", static_folder=config.STATIC_DIR, template_folder=config.TEMPLATES_DIR)
@@ -17,6 +18,8 @@ app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config['UPLOAD_FOLDER'] = config.SUBMISSION_DIR
 
 mail_client = Email_Client(**config.email_config)
+USER_SCORES = get_scores()
+
 
 @app.route("/netsoc-policy", methods=["GET"])
 def netsoc_policy():
@@ -48,9 +51,9 @@ def accept_policy():
 def home():
     return render_template("index.html",
                            COOKIES_NOTIFICATION=tools.show_cookies_policy(),
-                           LOGGED_IN=tools.is_logged_in()
+                           LOGGED_IN=tools.is_logged_in(),
+                           SCORES=USER_SCORES
                            )
-
 
 @app.route('/register', methods=["GET"])
 def register():

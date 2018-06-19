@@ -3,7 +3,10 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Oswald" />
     {{ super() }}
     <style>
-
+        .score{
+            font-size: 30px;
+        }
+        .oswald {font-family: Oswald}
         .time {
             font-family: Oswald;
             font-size: 70px;
@@ -14,11 +17,13 @@
             font-family: Oswald;
             font-size: 30px;
         }
+    .score-button {margin-top: 10%}
     </style>
 
 {% endblock %}
 {% block body %}
     {{ super() }}
+
 
     <div class="parallax-container">
 {#    #}
@@ -28,13 +33,13 @@
 {#        <span class="minutes time"></span><span class="timetype">&nbsp;Minutes</span><br>#}
 {#        <span class="seconds time"></span><span class="timetype">&nbsp;Seconds</span>#}
 {#    </div>#}
-
       <div class="parallax">
            <img height="200%"
                 style="display: block; transform: translate3d(-50%, 201px, 0px);"
                 src="{{ url_for('static', filename='assets/ai_4.jpg') }}">
       </div>
     </div>
+
 
     {#  About Section  #}
     <div class="section white black-text" id="about">
@@ -93,17 +98,50 @@
                     </div>
 
 
-                    <br>
-                    <h3 class="container-item col s12 m12 l12 header center-align">Registration Is Now Open</h3>
-                    <br>
-                    <div class="container-item col s12 m12 l12 center-align">
-                        <a href="/register" class="waves-effect waves-light btn-large #42a5f5 blue lighten-1">Register</a>
-                    </div>
+{#                    <br>#}
+{#                    <h3 class="container-item col s12 m12 l12 header center-align">Registration Is Now Open</h3>#}
+{#                    <br>#}
+{#                    <div class="container-item col s12 m12 l12 center-align">#}
+{#                        <a href="/register" class="waves-effect waves-light btn-large #42a5f5 blue lighten-1">Register</a>#}
+{#                    </div>#}
                     <br>
                 </div>
             </div>
         </div>
     </div>
+     {% if SCORES  %}
+    <div class="section white-text #42a5f5 blue oswald" id="scoreboard">
+        <div class="row container">
+            <h2 class="header">Leaderboard</h2>
+            <span class="flow-text">This leaderboard is a scoring of the user submitted predictors from the most recent games.</span>
+
+            <div class="container-item col s12 m12 l12">
+            <div class="card-content">
+                <table class="responsive-table score">
+                    <thead>
+                        <tr>
+                            <td>Ranking</td>
+                            <td>User</td>
+                            <td>Score</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for score in SCORES %}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>Predictor-{{ score.user_id }}</td>
+                            <td>{{ score.score }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    {% endif %}
 
     <div class="parallax-container">
       <div class="parallax">
